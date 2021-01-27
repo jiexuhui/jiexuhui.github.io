@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="搭建Gin框架二封装路由, 蒸汽秋葵">
+    <meta name="keywords" content="将本地Docker镜像打包上传到DockerHub, 蒸汽秋葵">
     <meta name="description" content="一个人要像一支队伍">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>搭建Gin框架二封装路由 | 蒸汽秋葵</title>
+    <title>将本地Docker镜像打包上传到DockerHub | 蒸汽秋葵</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -312,12 +312,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">搭建Gin框架二封装路由</h1>
+                    <h1 class="description center-align post-title">将本地Docker镜像打包上传到DockerHub</h1>
                 </div>
             </div>
         </div>
@@ -433,12 +433,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/golang/">
-                                <span class="chip bg-color">golang</span>
+                            <a href="/tags/Docker/">
+                                <span class="chip bg-color">Docker</span>
                             </a>
                         
-                            <a href="/tags/Gin/">
-                                <span class="chip bg-color">Gin</span>
+                            <a href="/tags/DockerHub/">
+                                <span class="chip bg-color">DockerHub</span>
                             </a>
                         
                     </div>
@@ -453,28 +453,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-01-15
+                    2021-01-27
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-01-18
+                    2021-01-27
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    221
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    1 分
                 </div>
                 
 
@@ -497,334 +497,30 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="把路由从main包中抽离出来"><a href="#把路由从main包中抽离出来" class="headerlink" title="把路由从main包中抽离出来"></a>把路由从main包中抽离出来</h2><ol>
-<li>新建一个router目录</li>
-</ol>
-<pre class="line-numbers language-none"><code class="language-none">go-gin-framework/
-├── router
-│   └── router.go
-|—— main.go<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>在router目录下新建<code>router.go</code>文件</p>
-<p>2.将<code>main.go</code>中的路由定义转移到<code>router.go</code>中</p>
-<p><code>router.go</code></p>
-<pre class="line-numbers language-none"><code class="language-none">package router
+                <h3 id="到官网注册账号"><a href="#到官网注册账号" class="headerlink" title="到官网注册账号"></a>到官网注册账号</h3><pre><code>官网地址：`https://hub.docker.com`</code></pre>
+<h3 id="账号密码注册成功后，在本地登录"><a href="#账号密码注册成功后，在本地登录" class="headerlink" title="账号密码注册成功后，在本地登录"></a>账号密码注册成功后，在本地登录</h3><pre><code>`docker login`</code></pre>
+<p>输入刚刚注册的账号密码进行登录</p>
+<pre><code>+ 如果要退出：
+    `docker logout`</code></pre>
+<h3 id="先准备好一个本地Docker镜像-假设镜像名为-dockerTest"><a href="#先准备好一个本地Docker镜像-假设镜像名为-dockerTest" class="headerlink" title="先准备好一个本地Docker镜像,假设镜像名为 dockerTest"></a>先准备好一个本地Docker镜像,假设镜像名为 <code>dockerTest</code></h3><pre><code>+ 使用`tag`命令修改为规范的镜像
+    `docker tag dockerTest username/dockerTest:v1`
 
-import "github.com/gin-gonic/gin"
+    其中`username`为dockerhub 的用户名
++ 查看修改后的镜像
+    `docker images -a`
 
-func InitRouter() *gin.Engine {
-	r := gin.New()
+    会发现除了之前的`dockerTest`镜像外，还多了一个`username/dockerTest:v1`镜像，这个就是我们要推送到云端的镜像了。</code></pre>
+<h3 id="推送镜像"><a href="#推送镜像" class="headerlink" title="推送镜像"></a>推送镜像</h3><pre><code>`docker push username/dockerTest:v1`
 
-	r.Use(gin.Logger())
+耐心等待推送成功就可以了。
 
-	r.Use(gin.Recovery())
+推送成功后就可以到docker hub 的主页看到我们刚刚推送的镜像了。</code></pre>
+<h3 id="使用推送的镜像"><a href="#使用推送的镜像" class="headerlink" title="使用推送的镜像"></a>使用推送的镜像</h3><pre><code>+ 查询线上的镜像
+    `docker seach dockerTest`
 
-	r.GET("/test", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "test",
-		})
-	})
++ 拉取镜像
+    `docket pull username/dockerTest:v1`</code></pre>
 
-	return r
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>main.go</code></p>
-<pre class="line-numbers language-none"><code class="language-none">package main
-
-import (
-	"livefun/router"
-	"net/http"
-	"time"
-)
-
-func main() {
-	router := router.InitRouter()
-	s := &amp;http.Server{
-		Addr:           ":8080",
-		Handler:        router,
-		ReadTimeout:    10 * time.Second,
-		WriteTimeout:   10 * time.Second,
-		MaxHeaderBytes: 1 &lt;&lt; 20,
-	}
-
-	s.ListenAndServe()
-}
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>运行起来后在浏览器访问<code>http://localhost:8080/test</code>,输出</p>
-<pre class="line-numbers language-none"><code class="language-none">{
-  "message": "test"
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h2 id="我们在新建一个目录用来存放一些系统配置-如端口环境等"><a href="#我们在新建一个目录用来存放一些系统配置-如端口环境等" class="headerlink" title="我们在新建一个目录用来存放一些系统配置, 如端口环境等"></a>我们在新建一个目录用来存放一些系统配置, 如端口环境等</h2><pre class="line-numbers language-none"><code class="language-none">go-gin-framework/
-├── config
-│   └── app.go
-├── router
-│   └── router.go
-|—— main.go
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>app.go</code> 的内容如下</p>
-<pre class="line-numbers language-none"><code class="language-none">package config
-
-type App struct {
-	Appname   string `mapstructure:"appname" json:"appname" yaml:"appname"`
-	AppSecret string `mapstructure:"appsecret" json:"appsecret" yaml:"appsecret"`
-	Env       string `mapstructure:"env" json:"env" yaml:"env"`
-	Addr      int    `mapstructure:"addr" json:"addr" yaml:"addr"`
-	DbType    string `mapstructure:"db-type" json:"dbType" yaml:"db-type"`
-}
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>我们在根目录新建一个<code>app.yaml</code>文件用来写配置</p>
-<p><code>app.yaml</code></p>
-<pre class="line-numbers language-none"><code class="language-none">app:
-  appname: "livefun" # Change to "develop" to skip authentication for development mode
-  env: "develop"
-  addr: 8888
-  db-type: "mysql"
-  oss-type: "local"
-  need-init-data: true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>我们使用viper模块来操作yaml配置文件</p>
-<ul>
-<li>我们先在<code>config</code>目录下面新建一个<code>config.go</code>文件,用于管理结构体,内容如下：</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">package config
-
-type Server struct {
-	App App `mapstructure:"app" json:"app" yaml:"app"`
-}
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<ul>
-<li>再新建一个<code>global</code>文件夹，同时在目录下新建<code>global.go</code>文件，用来定义全局变量，内容如下</li>
-</ul>
-<p><code>global.go</code></p>
-<pre class="line-numbers language-none"><code class="language-none">package global
-
-import (
-	"livefun/config"
-
-	"github.com/spf13/viper"
-)
-
-var (
-	GVA_CONFIG config.Server
-	GVA_VP     *viper.Viper
-)
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>所有文件创建完成后目录结构如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">go-gin-framework/
-├── config
-│   └── app.go
-│   └── config.go
-├── router
-│   └── router.go
-├── global
-│   └── global.go
-|—— main.go<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<ul>
-<li>修改<code>main.go</code>文件：</li>
-</ul>
-<p><code>main.go</code></p>
-<pre class="line-numbers language-none"><code class="language-none">package main
-
-import (
-	"fmt"
-	"livefun/global"
-	"livefun/router"
-	"net/http"
-	"time"
-
-	"github.com/fsnotify/fsnotify"
-	"github.com/spf13/viper"
-)
-
-func main() {
-	v := viper.New()
-	v.SetConfigFile("app.yaml")
-	err := v.ReadInConfig()
-	if err != nil {
-		panic(fmt.Errorf("Fatal error config file: %s \n", err))
-	}
-	v.WatchConfig()
-
-	v.OnConfigChange(func(e fsnotify.Event) {
-		fmt.Println("config file changed:", e.Name)
-		if err := v.Unmarshal(&amp;global.GVA_CONFIG); err != nil {
-			fmt.Println(err)
-		}
-	})
-
-	if err := v.Unmarshal(&amp;global.GVA_CONFIG); err != nil {
-		fmt.Println(err)
-	}
-	router := router.InitRouter()
-	s := &amp;http.Server{
-		Addr:           fmt.Sprintf(":%d", global.GVA_CONFIG.App.Addr),
-		Handler:        router,
-		ReadTimeout:    10 * time.Second,
-		WriteTimeout:   10 * time.Second,
-		MaxHeaderBytes: 1 &lt;&lt; 20,
-	}
-
-	s.ListenAndServe()
-}
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<ul>
-<li><code>Addr:           fmt.Sprintf(":%d", global.GVA_CONFIG.App.Addr),</code> 如此，我们就可以调用配置文件中的内容了</li>
-</ul>
-<h3 id="但是把初始化配置写在-main-go-中显得太乱了，我们新建一个核心模块-core-把初始化配置的内容剥离出去"><a href="#但是把初始化配置写在-main-go-中显得太乱了，我们新建一个核心模块-core-把初始化配置的内容剥离出去" class="headerlink" title="但是把初始化配置写在 main.go 中显得太乱了，我们新建一个核心模块 core,把初始化配置的内容剥离出去"></a>但是把初始化配置写在 <code>main.go</code> 中显得太乱了，我们新建一个核心模块 <code>core</code>,把初始化配置的内容剥离出去</h3><pre class="line-numbers language-none"><code class="language-none">go-gin-framework/
-├── config
-│   └── app.go
-│   └── config.go
-├── core
-│   └── config.go
-├── router
-│   └── router.go
-├── global
-│   └── global.go
-|—— main.go<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>config.go</code> 的内容如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">package core
-
-import (
-	"fmt"
-	"livefun/global"
-
-	"github.com/fsnotify/fsnotify"
-	"github.com/spf13/viper"
-)
-
-var config string
-
-func init() {
-	v := viper.New()
-	v.SetConfigFile("app.yaml")
-	err := v.ReadInConfig()
-	if err != nil {
-		panic(fmt.Errorf("Fatal error config file: %s \n", err))
-	}
-	v.WatchConfig()
-
-	v.OnConfigChange(func(e fsnotify.Event) {
-		fmt.Println("config file changed:", e.Name)
-		if err := v.Unmarshal(&amp;global.LF_CONFIG); err != nil {
-			fmt.Println(err)
-		}
-	})
-
-	if err := v.Unmarshal(&amp;global.LF_CONFIG); err != nil {
-		fmt.Println(err)
-	}
-
-}
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="同理我们把-main-go-中的初始化路由和运行服务部分也剥离出去，-新建一个目录-initialize"><a href="#同理我们把-main-go-中的初始化路由和运行服务部分也剥离出去，-新建一个目录-initialize" class="headerlink" title="同理我们把 main.go 中的初始化路由和运行服务部分也剥离出去， 新建一个目录 initialize"></a>同理我们把 <code>main.go</code> 中的初始化路由和运行服务部分也剥离出去， 新建一个目录 <code>initialize</code></h3><pre class="line-numbers language-none"><code class="language-none">go-gin-framework/
-├── config
-│   └── app.go
-│   └── config.go
-├── core
-│   └── config.go
-├── initialize
-│   └── user_router.go
-├── router
-│   └── router.go
-├── global
-│   └── global.go
-|—— main.go<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>initialize</code> 下 <code>router.go</code> 的内容如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">
-package initialize
-
-import (
-	"livefun/router"
-
-	"github.com/gin-gonic/gin"
-)
-
-func Routers() *gin.Engine {
-	var Router = gin.Default()
-	ApiGroup := Router.Group("")
-
-	router.InitRouter(ApiGroup)
-	return Router
-}
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="下面我们把运行服务器的代码也放到-core-中去，新建server-go-和-server-win-go-文件"><a href="#下面我们把运行服务器的代码也放到-core-中去，新建server-go-和-server-win-go-文件" class="headerlink" title="下面我们把运行服务器的代码也放到 core 中去，新建server.go 和 server_win.go 文件:"></a>下面我们把运行服务器的代码也放到 <code>core</code> 中去，新建<code>server.go</code> 和 <code>server_win.go</code> 文件:</h3><p><code>server.go</code></p>
-<pre class="line-numbers language-none"><code class="language-none">package core
-
-import (
-	"fmt"
-	"livefun/global"
-	"livefun/initialize"
-	"time"
-)
-
-type server interface {
-	ListenAndServe() error
-}
-
-func RunWindowsServer() {
-	Router := initialize.Routers()
-
-	address := fmt.Sprintf(":%d", global.LF_CONFIG.App.Addr)
-	time.Sleep(10 * time.Microsecond)
-
-	s := initServer(address, Router)
-	time.Sleep(10 * time.Microsecond)
-	fmt.Printf(`
-	Welcome!
-	当前版本:V1.0.0
-`, address)
-	s.ListenAndServe()
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>server_win.go</code></p>
-<pre class="line-numbers language-none"><code class="language-none">// +build windows
-
-package core
-
-import (
-	"net/http"
-	"time"
-
-	"github.com/gin-gonic/gin"
-)
-
-func initServer(address string, router *gin.Engine) server {
-	return &amp;http.Server{
-		Addr:           address,
-		Handler:        router,
-		ReadTimeout:    10 * time.Second,
-		WriteTimeout:   10 * time.Second,
-		MaxHeaderBytes: 1 &lt;&lt; 20,
-	}
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>// +build windows</code> 这一句是告诉编译器这个文件是windows系统下使用的，同样的可以使用<br><code>// +build !windows</code> 为非windows 系统下使用</p>
-<h3 id="接下来我们修改一下-user-router-go-的内容："><a href="#接下来我们修改一下-user-router-go-的内容：" class="headerlink" title="接下来我们修改一下 user_router.go 的内容："></a>接下来我们修改一下 <code>user_router.go</code> 的内容：</h3><p><code>user_router.go</code></p>
-<pre class="line-numbers language-none"><code class="language-none">package router
-
-import "github.com/gin-gonic/gin"
-
-func InitRouter(Router *gin.RouterGroup) {
-
-	UserRouter := Router.Group("user")
-	{
-		UserRouter.GET("/test", func(c *gin.Context) {
-			c.JSON(200, gin.H{
-				"message": "test",
-			})
-		})
-	}
-
-}
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="最后修改-main-go-的内容："><a href="#最后修改-main-go-的内容：" class="headerlink" title="最后修改 main.go 的内容："></a>最后修改 <code>main.go</code> 的内容：</h3><p><code>main.go</code></p>
-<pre class="line-numbers language-none"><code class="language-none">package main
-
-import (
-	"livefun/core"
-)
-
-func main() {
-	core.RunWindowsServer()
-}
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="好了，这样就清爽多了，运行-go-run-main-go-在浏览器中输入localhost-8888-user-test试试吧。"><a href="#好了，这样就清爽多了，运行-go-run-main-go-在浏览器中输入localhost-8888-user-test试试吧。" class="headerlink" title="好了，这样就清爽多了，运行 go run main.go 在浏览器中输入localhost:8888/user/test试试吧。"></a>好了，这样就清爽多了，运行 <code>go run main.go</code> 在浏览器中输入<code>localhost:8888/user/test</code>试试吧。</h3>
                 
             </div>
             <hr/>
@@ -850,7 +546,7 @@ func main() {
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://qaq.beesfive.com/2021/01/15/Gin%E6%90%AD%E5%BB%BArestful%E6%A1%86%E6%9E%B6%E4%B9%8B%E5%B0%81%E8%A3%85%E8%B7%AF%E7%94%B1/">http://qaq.beesfive.com/2021/01/15/Gin%E6%90%AD%E5%BB%BArestful%E6%A1%86%E6%9E%B6%E4%B9%8B%E5%B0%81%E8%A3%85%E8%B7%AF%E7%94%B1/</a>
+                    <a href="http://qaq.beesfive.com/2021/01/27/%E5%B0%86%E6%9C%AC%E5%9C%B0Docker%E9%95%9C%E5%83%8F%E6%89%93%E5%8C%85%E4%B8%8A%E4%BC%A0%E5%88%B0DockerHub/">http://qaq.beesfive.com/2021/01/27/%E5%B0%86%E6%9C%AC%E5%9C%B0Docker%E9%95%9C%E5%83%8F%E6%89%93%E5%8C%85%E4%B8%8A%E4%BC%A0%E5%88%B0DockerHub/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -888,12 +584,12 @@ func main() {
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/golang/">
-                                    <span class="chip bg-color">golang</span>
+                                <a href="/tags/Docker/">
+                                    <span class="chip bg-color">Docker</span>
                                 </a>
                             
-                                <a href="/tags/Gin/">
-                                    <span class="chip bg-color">Gin</span>
+                                <a href="/tags/DockerHub/">
+                                    <span class="chip bg-color">DockerHub</span>
                                 </a>
                             
                         </div>
@@ -1063,17 +759,18 @@ func main() {
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/01/18/Gin%E6%90%AD%E5%BB%BArestful%E6%A1%86%E6%9E%B6%E4%B9%8B%E6%97%A5%E5%BF%97/">
+                <a href="/2021/01/27/%E5%B0%86%E6%9C%AC%E5%9C%B0Docker%E9%95%9C%E5%83%8F%E6%89%93%E5%8C%85%E4%B8%8A%E4%BC%A0%E5%88%B0DockerHub/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Gin搭建restful框架三之日志">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="将本地Docker镜像打包上传到DockerHub">
                         
-                        <span class="card-title">Gin搭建restful框架三之日志</span>
+                        <span class="card-title">将本地Docker镜像打包上传到DockerHub</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1083,9 +780,9 @@ func main() {
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-18
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-27
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -1094,23 +791,16 @@ func main() {
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/golang/">
-                        <span class="chip bg-color">golang</span>
+                    <a href="/tags/Docker/">
+                        <span class="chip bg-color">Docker</span>
                     </a>
                     
-                    <a href="/tags/GIn/">
-                        <span class="chip bg-color">GIn</span>
-                    </a>
-                    
-                    <a href="/tags/restful-api/">
-                        <span class="chip bg-color">restful-api</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%97%A5%E5%BF%97/">
-                        <span class="chip bg-color">日志</span>
+                    <a href="/tags/DockerHub/">
+                        <span class="chip bg-color">DockerHub</span>
                     </a>
                     
                 </div>
@@ -1124,13 +814,13 @@ func main() {
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/01/15/%E4%BD%BF%E7%94%A8gin%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AArestFul%E6%A1%86%E6%9E%B6%E4%B8%80/">
+                <a href="/2021/01/27/Gin%E6%90%AD%E5%BB%BArestful%E6%A1%86%E6%9E%B6%E4%B9%8B%E4%BD%BF%E7%94%A8docker/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="使用gin搭建一个restFul框架一">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Gin搭建restful框架之使用docker">
                         
-                        <span class="card-title">使用gin搭建一个restFul框架一</span>
+                        <span class="card-title">Gin搭建restful框架之使用docker</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1141,7 +831,7 @@ func main() {
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-15
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-27
                             </span>
                         <span class="publish-author">
                             
@@ -1158,16 +848,12 @@ func main() {
                         <span class="chip bg-color">golang</span>
                     </a>
                     
-                    <a href="/tags/gin/">
-                        <span class="chip bg-color">gin</span>
+                    <a href="/tags/Gin/">
+                        <span class="chip bg-color">Gin</span>
                     </a>
                     
-                    <a href="/tags/go/">
-                        <span class="chip bg-color">go</span>
-                    </a>
-                    
-                    <a href="/tags/rest-api/">
-                        <span class="chip bg-color">rest-api</span>
+                    <a href="/tags/docker/">
+                        <span class="chip bg-color">docker</span>
                     </a>
                     
                 </div>
