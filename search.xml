@@ -4,6 +4,600 @@
   
     
     <entry>
+      <title>滑动窗口最大值</title>
+      <link href="2021/02/19/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E6%9C%80%E5%A4%A7%E5%80%BC/"/>
+      <url>2021/02/19/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E6%9C%80%E5%A4%A7%E5%80%BC/</url>
+      
+        <content type="html"><![CDATA[<h5 id="滑动窗口最大值"><a href="#滑动窗口最大值" class="headerlink" title="滑动窗口最大值"></a>滑动窗口最大值</h5><pre class="line-numbers language-none"><code class="language-none">给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。返回滑动窗口中的最大值。返回滑动窗口中的最大值所构成的数组。示例:输入: nums = [1,3,-1,-3,5,3,6,7], 和 k = 3 输出: [3,3,5,5,6,7] 解释:滑动窗口的位置 最大值[1 3 -1] -3 5 3 6 7 31 [3 -1 -3] 5 3 6 7 31 3 [-1 -3 5] 3 6 7 51 3 -1 [-3 5 3] 6 7 51 3 -1 -3 [5 3 6] 7 61 3 -1 -3 5 [3 6 7] 7<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h5 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h5><pre class="line-numbers language-none"><code class="language-none">func maxSlidingWindow(nums []int, k int) []int {ret := make([]int, 0)index := 0nlen := len(nums)for index &lt;= nlen-k {m := nums[index]for j := index + 1; j &lt; index+k; j++ {if m &lt; nums[j] {m = nums[j]}}ret = append(ret, m)index++}return ret}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h5 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h5><pre class="line-numbers language-none"><code class="language-none">func maxSlidingWindow2(nums []int, k int) []int {ret := make([]int, 0)if len(nums) == 0 {return ret}var queen []intfor i := range nums {for i &gt; 0 &amp;&amp; (len(queen) &gt; 0) &amp;&amp; nums[i] &gt; queen[len(queen)-1] {queen = queen[:len(queen)-1]}queen = append(queen, nums[i])if i &gt;= k &amp;&amp; nums[i-k] == queen[0] {queen = queen[1:]}if i &gt;= k-1 {ret = append(ret, queen[0])}}return ret}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>验证回文串</title>
+      <link href="2021/02/19/%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E4%B8%B2/"/>
+      <url>2021/02/19/%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E4%B8%B2/</url>
+      
+        <content type="html"><![CDATA[<h5 id="验证回文串"><a href="#验证回文串" class="headerlink" title="验证回文串"></a>验证回文串</h5><p>给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。</p><p>说明： 本题中，我们将空字符串定义为有效的回文串。</p><p><code>示例 1: 输入: "A man, a plan, a canal: Panama" 输出: true</code></p><p><code>示例 2: 输入: "race a car" 输出: false</code></p><h5 id=""><a href="#" class="headerlink" title=""></a></h5><pre class="line-numbers language-none"><code class="language-none">func isPalindrome(s string) bool {if s == "" {return false}s = strings.ToLower(s)if len(s) == 2 {return s[0] == s[1]}left := 0right := len(s) - 1for left &lt; right {if !((s[left] &gt;= 'a' &amp;&amp; s[left] &lt;= 'z') || (s[left] &gt;= '0' &amp;&amp; s[left] &lt;= '9')) {left++continue}if !((s[right] &gt;= 'a' &amp;&amp; s[right] &lt;= 'z') || (s[right] &gt;= '0' &amp;&amp; s[right] &lt;= '9')) {right--continue}if s[left] != s[right] {return false}left++right--}return true}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>字符串中的第一个唯一字符</title>
+      <link href="2021/02/19/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%94%AF%E4%B8%80%E5%AD%97%E7%AC%A6/"/>
+      <url>2021/02/19/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%94%AF%E4%B8%80%E5%AD%97%E7%AC%A6/</url>
+      
+        <content type="html"><![CDATA[<h5 id="字符串中的第一个唯一字符"><a href="#字符串中的第一个唯一字符" class="headerlink" title="字符串中的第一个唯一字符"></a>字符串中的第一个唯一字符</h5><p>给定一个字符串，找到它的第一个不重复的字符，并返回它的索引。如果不存在，则返回 -1 。 案例:</p><p><code>s = "leetcode" 返回 0.</code></p><p><code>s = "loveleetcode", 返回 2.</code></p><p>注意事项： 您可以假定该字符串只包含小写字母。</p><h5 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h5><pre class="line-numbers language-none"><code class="language-none">func firstUniqueChar(s string) int {var arr [26]intfor i, v := range s {arr[v-'a'] = i}for i, v := range s {if arr[v-'a'] == i {return i}}return -1}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>反转字符串</title>
+      <link href="2021/02/19/%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
+      <url>2021/02/19/%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+      
+        <content type="html"><![CDATA[<h5 id="反转字符串"><a href="#反转字符串" class="headerlink" title="反转字符串"></a>反转字符串</h5><p>编写一个函数，其作用是将输入的字符串反转过来。输入字符串以字符数组 char[] 的形式给出。 不要给另外的数组分配额外的空间，你必须原地修改输入数组、使用 O(1) 的额外空间解决这一问题</p><h5 id="使用双指针进行反转字符串。"><a href="#使用双指针进行反转字符串。" class="headerlink" title="使用双指针进行反转字符串。"></a>使用双指针进行反转字符串。</h5><pre class="line-numbers language-none"><code class="language-none">func reverse(s []byte) []byte {left := 0right := len(s) - 1for left &lt; right {s[left], s[right] = s[right], s[left]left++right--}return s}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>实现strStr</title>
+      <link href="2021/02/18/%E5%AE%9E%E7%8E%B0strStr/"/>
+      <url>2021/02/18/%E5%AE%9E%E7%8E%B0strStr/</url>
+      
+        <content type="html"><![CDATA[<h5 id="实现-strStr"><a href="#实现-strStr" class="headerlink" title="实现 strStr()"></a>实现 strStr()</h5><p>实现 strStr() 函数。给定一个 haystack 字符串和一个 needle 字符串，在 haystack 字符串中找出 needle 字符串出现的第一个位置 (从0开始)。如果不存在，则返回 -1。</p><p>示例 1:</p><p><code>输入: haystack = "hello", needle = "ll" 输出: 2</code></p><p>示例 2:</p><p><code>输入: haystack = "aaaaa", needle = "bba" 输出: -1</code></p><h5 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h5><pre class="line-numbers language-none"><code class="language-none">func strStr(haystack string, needle string) int {if len(needle) == 0 {return 0}nlen := len(needle)for i := 0; i &lt; len(haystack)-nlen; i++ {if haystack[i:i+nlen] == needle {return i}}return -1}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h5 id="使用Sunday算法"><a href="#使用Sunday算法" class="headerlink" title="使用Sunday算法"></a>使用Sunday算法</h5><pre class="line-numbers language-none"><code class="language-none">func strStrSunday(haystack string, needle string) int {// 判断字符串的合法性if len(haystack) &lt; len(needle) {return -1}if len(needle) == 0 {return 0}// 最终返回的位置index := -1// 主索引位置i := 0// 目标索引位置nIndex := 0for i &lt; len(haystack) {if haystack[i] == needle[nIndex] {if index == -1 {index = i}i++nIndex++if nIndex &gt;= len(needle) {break}continue}index = -1i = i + len(needle) - nIndexif i &gt;= len(haystack) {return index}offset := 1for j := len(needle) - 1; j &gt; 0; j-- {if haystack[i] == needle[j] {offset = jbreak}}i = i - offsetnIndex = 0}return index}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>内存逃逸</title>
+      <link href="2021/02/07/%E5%86%85%E5%AD%98%E9%80%83%E9%80%B8/"/>
+      <url>2021/02/07/%E5%86%85%E5%AD%98%E9%80%83%E9%80%B8/</url>
+      
+        <content type="html"><![CDATA[<h4 id="内存逃逸"><a href="#内存逃逸" class="headerlink" title="内存逃逸"></a>内存逃逸</h4><p>golang程序变量会携带一组校验数据，用于证明程序在生命周期中时完全可知。如果一个变量通过了这些校验，它就可以在栈上分配。否则就说它<code>逃逸</code>了，必须在堆上分配。</p><h5 id="典型情况"><a href="#典型情况" class="headerlink" title="典型情况"></a>典型情况</h5><ul><li>在方法内把局部变量指针返回。  局部变量在栈中分配，在栈中回收。但是由于返回时被外部引用，因此其生命周期大于栈，则溢出。</li><li>发送指针或者带有指针的值到<code>channel</code>中。 在编译时，没有办法知道哪个<code>goroutine</code>在channel上接收数据，所以编译器没法知道变量什么时候释放。</li><li>在一个切片上分配指针，或者带有指针的值。 一个典型的例子就是 <code>[]*string</code>。这会导致切片的内容逃逸。尽管后面的数组可能是在栈上分配的，但是其引用的值一定是在堆上。</li><li>slice 背后的数组被重新分配了，因为append 时可能会超出其容量。 <code>slice</code>初始化的地方在编译时是知道的，它最开始会在栈上分配。如果切片背后的存储要基于运行时的数据进行扩充，就会在堆上分配</li><li>在 <code>interface</code> 类型上调用方法。在<code>interface</code>类型上调用方法都是动态调度的——方法的真正实现只有在运行时才知道。想想一个<code>io.Reader</code>类型的变量r, 调用<code>r.Read()</code>类型的变量r，调用<code>r.Read()</code>会是的r的值和切片b的背后存储都逃逸掉，所以会在对上分配。</li></ul><h5 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h5><pre class="line-numbers language-none"><code class="language-none">package mainimport "fmt"type A struct { s string}// 这是上面提到的 "在方法内把局部变量指针返回" 的情况func foo(s string) *A { a := new(A)  a.s = s return a //返回局部变量a,在C语言中妥妥野指针，但在go则ok，但a会逃逸到堆}func main() { a := foo("hello") b := a.s + " world" c := b + "!" fmt.Println(c)}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>执行go build -gcflags=-m main.go</p><pre class="line-numbers language-none"><code class="language-none">go build -gcflags=-m main.go# command-line-arguments./main.go:7:6: can inline foo./main.go:13:10: inlining call to foo./main.go:16:13: inlining call to fmt.Println/var/folders/45/qx9lfw2s2zzgvhzg3mtzkwzc0000gn/T/go-build409982591/b001/_gomod_.go:6:6: can inline init.0./main.go:7:10: leaking param: s./main.go:8:10: new(A) escapes to heap./main.go:16:13: io.Writer(os.Stdout) escapes to heap./main.go:16:13: c escapes to heap./main.go:15:9: b + "!" escapes to heap./main.go:13:10: main new(A) does not escape./main.go:14:11: main a.s + " world" does not escape./main.go:16:13: main []interface {} literal does not escape&lt;autogenerated&gt;:1: os.(*File).close .this does not escape<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><ul><li>./main.go:8:10: new(A) escapes to heap 说明 new(A) 逃逸了,符合上述提到的常见情况中的第一种。</li><li>./main.go:14:11: main a.s + “ world” does not escape 说明 b 变量没有逃逸，因为它只在方法内存在，会在方法结束时被回收。</li><li>./main.go:15:9: b + “!” escapes to heap 说明 c 变量逃逸，通过fmt.Println(a …interface{})打印的变量，都会发生逃逸</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> interview </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>多协程查询切片问题</title>
+      <link href="2021/02/04/%E5%A4%9A%E5%8D%8F%E7%A8%8B%E6%9F%A5%E8%AF%A2%E5%88%87%E7%89%87%E9%97%AE%E9%A2%98/"/>
+      <url>2021/02/04/%E5%A4%9A%E5%8D%8F%E7%A8%8B%E6%9F%A5%E8%AF%A2%E5%88%87%E7%89%87%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<h4 id="多协程查询切片问题"><a href="#多协程查询切片问题" class="headerlink" title="多协程查询切片问题"></a>多协程查询切片问题</h4><p>题目<br>假设有一个超长的切片，切片的元素类型为int，切片中的元素为乱序排序。限时5秒，使用多个goroutine查找切片中是否存在给定的值，在查找到目标值或者超时后立刻结束所有goroutine的执行。</p><p>比如，切片 [23,32,78,43,76,65,345,762,……915,86]，查找目标值为 345 ，如果切片中存在，则目标值输出”Found it!”并立即取消仍在执行查询任务的goroutine。</p><p>如果在超时时间未查到目标值程序，则输出”Timeout！Not Found”，同时立即取消仍在执行的查找任务的goroutine。</p><h5 id=""><a href="#" class="headerlink" title=""></a></h5><pre class="line-numbers language-none"><code class="language-none">package mainimport ("context""fmt""time")func main() {data := []int{1, 2, 3, 10, 999, 8, 345, 7, 98, 33, 66, 77, 88, 68, 96}dataLen := len(data)ctx, cancel := context.WithCancel(context.Background())resultChan := make(chan bool)timer := time.NewTimer(time.Second * 5)size := 3target := 345for i := 0; i &lt; dataLen; i += size {end := i + sizeif end &gt;= dataLen {end = dataLen - 1}go seachIndex(ctx, resultChan, data[i:end], target)}select {case &lt;-timer.C:cancel()case &lt;-resultChan:fmt.Println("found it!")cancel()}}func seachIndex(ctx context.Context, resultChan chan bool, data []int, target int) {for _, v := range data {fmt.Println("v&gt;&gt;&gt;", v)select {case &lt;-ctx.Done():fmt.Println("task cancelded")returndefault:}if v == target {resultChan &lt;- truereturn}}return}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> interview </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>记一道字节跳动的算法面试题</title>
+      <link href="2021/02/04/%E8%AE%B0%E4%B8%80%E9%81%93%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E7%9A%84%E7%AE%97%E6%B3%95%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+      <url>2021/02/04/%E8%AE%B0%E4%B8%80%E9%81%93%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E7%9A%84%E7%AE%97%E6%B3%95%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<h4 id="这其实是一道变形的链表反转题，大致描述如下"><a href="#这其实是一道变形的链表反转题，大致描述如下" class="headerlink" title="这其实是一道变形的链表反转题，大致描述如下"></a>这其实是一道变形的链表反转题，大致描述如下</h4><p>给定一个单链表的头节点 head,实现一个调整单链表的函数，使得每K个节点之间为一组进行逆序，并且从链表的尾部开始组起，头部剩余节点数量不够一组的不需要逆序。（不能使用队列或者栈作为辅助）<br>例如：<br>链表:1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;6-&gt;7-&gt;8-&gt;null, K = 3。那么 6-&gt;7-&gt;8，3-&gt;4-&gt;5，1-&gt;2各位一组。调整后：1-&gt;2-&gt;5-&gt;4-&gt;3-&gt;8-&gt;7-&gt;6-&gt;null。其中 1，2不调整，因为不够一组。</p><h5 id=""><a href="#" class="headerlink" title=""></a></h5><pre class="line-numbers language-none"><code class="language-none">package mainimport "fmt"type ListNode struct {Val  intNext *ListNode}//反转链表的实现func reverseList(head *ListNode) *ListNode {cur := headvar pre *ListNode = nilfor cur != nil {pre, cur, cur.Next = cur, cur.Next, pre //这句话最重要}return pre}// 反转k个节点func reverseKList(head *ListNode, nodeNum int) *ListNode {temp := headfor i := 1; i &lt; nodeNum &amp;&amp; temp.Next != nil; i++ {temp = temp.Next}if temp == nil || temp.Next == nil {return head}t2 := temp.Nexttemp.Next = nilnewHead := reverseList(head)newTemp := reverseKList(t2, nodeNum)head.Next = newTempreturn newHead}func main() {head := new(ListNode)head.Val = 1ln2 := new(ListNode)ln2.Val = 2ln3 := new(ListNode)ln3.Val = 3ln4 := new(ListNode)ln4.Val = 4ln5 := new(ListNode)ln5.Val = 5ln6 := new(ListNode)ln6.Val = 6ln7 := new(ListNode)ln7.Val = 7ln8 := new(ListNode)ln8.Val = 8head.Next = ln2ln2.Next = ln3ln3.Next = ln4ln4.Next = ln5ln5.Next = ln6ln6.Next = ln7ln7.Next = ln8pre := reverseList(head)printList(pre)fmt.Println("---------")pre = reverseKList(pre, 3)printList(pre)pre = reverseList(pre)fmt.Println("---------")printList(pre)}func printList(head *ListNode) {for head != nil {fmt.Println(head.Val)head = head.Next}}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> interview </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>为sync.WaitGroup中Wait函数支持WaitTimeout功能.</title>
+      <link href="2021/02/03/%E4%B8%BAsync-WaitGroup%E4%B8%ADWait%E5%87%BD%E6%95%B0%E6%94%AF%E6%8C%81WaitTimeout%E5%8A%9F%E8%83%BD/"/>
+      <url>2021/02/03/%E4%B8%BAsync-WaitGroup%E4%B8%ADWait%E5%87%BD%E6%95%B0%E6%94%AF%E6%8C%81WaitTimeout%E5%8A%9F%E8%83%BD/</url>
+      
+        <content type="html"><![CDATA[<h4 id="为-sync-WaitGroup-中Wait函数支持-WaitTimeout-功能"><a href="#为-sync-WaitGroup-中Wait函数支持-WaitTimeout-功能" class="headerlink" title="为 sync.WaitGroup 中Wait函数支持 WaitTimeout 功能."></a>为 sync.WaitGroup 中Wait函数支持 WaitTimeout 功能.</h4><pre class="line-numbers language-none"><code class="language-none">package mainimport (    "fmt"    "sync"    "time")func main() {    wg := sync.WaitGroup{}    c := make(chan struct{})    for i := 0; i &lt; 10; i++ {        wg.Add(1)        go func(num int, close &lt;-chan struct{}) {            defer wg.Done()            &lt;-close            fmt.Println(num)        }(i, c)    }    if WaitTimeout(&amp;wg, time.Second*5) {        close(c)        fmt.Println("timeout exit")    }    time.Sleep(time.Second * 10)}func WaitTimeout(wg *sync.WaitGroup, timeout time.Duration) bool {    // 要求手写代码    // 要求sync.WaitGroup支持timeout功能    // 如果timeout到了超时时间返回true    // 如果WaitGroup自然结束返回false}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h4 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h4><p>首先 sync.WaitGroup 对象的 Wait 函数本身是阻塞的，同时，超时用到的time.Timer 对象也需要阻塞的读。</p><p>同时阻塞的两个对象肯定要每个启动一个协程,每个协程去处理一个阻塞，难点在于怎么知道哪个阻塞先完成。</p><p>目前我用的方式是声明一个没有缓冲的chan，谁先完成谁优先向管道中写入数据。</p><pre class="line-numbers language-none"><code class="language-none">func main() {wg := sync.WaitGroup{}c := make(chan struct{})for i := 0; i &lt; 10; i++ {wg.Add(1)go func(num int, close &lt;-chan struct{}) {defer wg.Done()&lt;-closefmt.Println(num)}(i, c)}if WaitTimeout(&amp;wg, time.Second*5) {close(c)fmt.Println("timeout exit")}time.Sleep(time.Second * 10)}func WaitTimeout(wg *sync.WaitGroup, timeout time.Duration) bool {// 要求手写代码// 要求sync.WaitGroup支持timeout功能// 如果timeout到了超时时间返回true// 如果WaitGroup自然结束返回falsech := make(chan bool, 1)go time.AfterFunc(timeout, func() {ch &lt;- true})go func() {wg.Wait()ch &lt;- false}()return &lt;-ch}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> interview </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>定时与panic恢复</title>
+      <link href="2021/02/03/%E5%AE%9A%E6%97%B6%E4%B8%8Epanic%E6%81%A2%E5%A4%8D/"/>
+      <url>2021/02/03/%E5%AE%9A%E6%97%B6%E4%B8%8Epanic%E6%81%A2%E5%A4%8D/</url>
+      
+        <content type="html"><![CDATA[<h4 id="写出以下逻辑，要求每秒钟调用一次proc并保证程序不退出"><a href="#写出以下逻辑，要求每秒钟调用一次proc并保证程序不退出" class="headerlink" title="写出以下逻辑，要求每秒钟调用一次proc并保证程序不退出"></a>写出以下逻辑，要求每秒钟调用一次proc并保证程序不退出</h4><pre class="line-numbers language-none"><code class="language-none">package mainfunc main() {    go func() {        // 1 在这里需要你写算法        // 2 要求每秒钟调用一次proc函数        // 3 要求程序不能退出    }()    select {}}func proc() {    panic("ok")}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h4 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h4><p>题目主要考察了两个知识点：</p><p>定时执行执行任务<br>捕获 panic 错误<br>题目中要求每秒钟执行一次，首先想到的就是 time.Ticker对象，该函数可每秒钟往chan中放一个Time,正好符合我们的要求。</p><p>在 golang 中捕获 panic 一般会用到 recover() 函数。</p><pre class="line-numbers language-none"><code class="language-none">package mainimport ("fmt""time")func main() {go func() {// 1 在这里需要你写算法// 2 要求每秒钟调用一次proc函数// 3 要求程序不能退出t := time.NewTicker(time.Second * 1)for {select {case &lt;-t.C:go func() {defer func() {if err := recover(); err != nil {fmt.Println(err)}}()proc()}()}}}()select {}}func proc() {panic("ok")}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> interview </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>高并发下的锁与map的读写</title>
+      <link href="2021/02/03/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E7%9A%84%E9%94%81%E4%B8%8Emap%E7%9A%84%E8%AF%BB%E5%86%99/"/>
+      <url>2021/02/03/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E7%9A%84%E9%94%81%E4%B8%8Emap%E7%9A%84%E8%AF%BB%E5%86%99/</url>
+      
+        <content type="html"><![CDATA[<h4 id="高并发下的锁与map的读写"><a href="#高并发下的锁与map的读写" class="headerlink" title="高并发下的锁与map的读写"></a>高并发下的锁与map的读写</h4><p>场景：在一个高并发的web服务器中，要限制IP的频繁访问。现模拟100个IP同时并发访问服务器，每个IP要重复访问1000次。</p><p>每个IP三分钟之内只能访问一次。修改以下代码完成该过程，要求能成功输出 success:100</p><pre class="line-numbers language-none"><code class="language-none">package main import ("fmt""time") type Ban struct {visitIPs map[string]time.Time} func NewBan() *Ban {return &amp;Ban{visitIPs: make(map[string]time.Time)}}func (o *Ban) visit(ip string) bool {if _, ok := o.visitIPs[ip]; ok {return true}o.visitIPs[ip] = time.Now()return false}func main() {success := 0ban := NewBan()for i := 0; i &lt; 1000; i++ {for j := 0; j &lt; 100; j++ {go func() {ip := fmt.Sprintf("192.168.1.%d", j)if !ban.visit(ip) {success++}}()} }fmt.Println("success:", success)}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h4 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h4><p>该问题主要考察了并发情况下map的读写问题，而给出的初始代码，又存在for循环中启动goroutine时变量使用问题以及goroutine执行滞后问题。</p><p>因此，首先要保证启动的goroutine得到的参数是正确的，然后保证map的并发读写，最后保证三分钟只能访问一次。</p><p>多CPU核心下修改int的值极端情况下会存在不同步情况，因此需要原子性的修改int值。</p><p>下面给出的实例代码，是启动了一个协程每分钟检查一下map中的过期ip，for启动协程时传参。</p><pre class="line-numbers language-none"><code class="language-none">type Ban struct {visitIps map[string]time.Timelock     sync.Mutex}func NewBan(ctx context.Context) *Ban {o := &amp;Ban{visitIps: make(map[string]time.Time)}go func() {timer := time.NewTimer(time.Minute * 1)for {select {case &lt;-timer.C:o.lock.Lock()for k, v := range o.visitIps {if time.Now().Sub(v) &gt;= time.Minute*1 {delete(o.visitIps, k)}}o.lock.Unlock()timer.Reset(time.Minute * 1)case &lt;-ctx.Done():return}}}()return o}func (o *Ban) visit(ip string) bool {o.lock.Lock()defer o.lock.Unlock()if _, ok := o.visitIps[ip]; ok {return true}o.visitIps[ip] = time.Now()return false}func main() {success := int64(0)ctx, cancel := context.WithCancel(context.Background())defer cancel()ban := NewBan(ctx)wait := &amp;sync.WaitGroup{}wait.Add(1000 * 100)for i := 0; i &lt; 1000; i++ {for j := 0; j &lt; 100; j++ {go func(j int) {defer wait.Done()ip := fmt.Sprintf("192.168.1.%d", j)if !ban.visit(ip) {atomic.AddInt64(&amp;success, 1)}}(j)}}wait.Wait()fmt.Println("success:", success)}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> interview </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>实现阻塞读且并发安全的map</title>
+      <link href="2021/02/01/%E5%AE%9E%E7%8E%B0%E9%98%BB%E5%A1%9E%E8%AF%BB%E4%B8%94%E5%B9%B6%E5%8F%91%E5%AE%89%E5%85%A8%E7%9A%84map/"/>
+      <url>2021/02/01/%E5%AE%9E%E7%8E%B0%E9%98%BB%E5%A1%9E%E8%AF%BB%E4%B8%94%E5%B9%B6%E5%8F%91%E5%AE%89%E5%85%A8%E7%9A%84map/</url>
+      
+        <content type="html"><![CDATA[<h3 id="实现阻塞读且并发安全的map"><a href="#实现阻塞读且并发安全的map" class="headerlink" title="实现阻塞读且并发安全的map"></a>实现阻塞读且并发安全的map</h3><p>GO里面MAP如何实现key不存在 get操作等待 直到key存在或者超时，保证并发安全，且需要实现以下接口：</p><pre class="line-numbers language-none"><code class="language-none">type sp interface {    Out(key string, val interface{})  //存入key /val，如果该key读取的goroutine挂起，则唤醒。此方法不会阻塞，时刻都可以立即执行并返回    Rd(key string, timeout time.Duration) interface{}  //读取一个key，如果key不存在阻塞，等待key存在或者超时}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><h4 id="解析："><a href="#解析：" class="headerlink" title="解析："></a>解析：</h4><p>看到阻塞协程第一个想到的就是channel，题目中要求并发安全，那么必须用锁，还要实现多个goroutine读的时候如果值不存在则阻塞，直到写入值，那么每个键值需要有一个阻塞goroutine 的 channel。</p><pre class="line-numbers language-none"><code class="language-none">type Map struct {c   map[string]*entryrmx sync.RWMutex}type entry struct {ch      chan struct{}value   interface{}isExist bool}func (m *Map) Out(key string, val interface{}) {m.rmx.Lock()defer m.rmx.Unlock()if e, ok := m.c[key]; ok {e.value = vale.isExist = trueclose(m.c[key].ch)} else {e = &amp;entry{ch: make(chan struct{}), value: val, isExist: true}m.c = make(map[string]*entry)m.c[key] = efmt.Println("m&gt;&gt;&gt;", m.c[key])close(e.ch)}}func (m *Map) Rd(key string, timeout time.Duration, i int) interface{} {m.rmx.Lock()defer m.rmx.Unlock()if e, ok := m.c[key]; ok &amp;&amp; e.isExist {return e.value} else if !ok {m.c = make(map[string]*entry)e = &amp;entry{ch: make(chan struct{}), isExist: true}m.c[key] = efmt.Println("携程阻塞》》》", key)select {case &lt;-e.ch:return e.valuecase &lt;-time.After(timeout):fmt.Println("超时》》》", key)close(m.c[key].ch)return nil}} else {select {case &lt;-e.ch:return e.valuecase &lt;-time.After(timeout):fmt.Println("超时》》》", key)return nil}}}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> interview </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>协程和channel配合使用</title>
+      <link href="2021/02/01/%E5%8D%8F%E7%A8%8B%E5%92%8Cchannel%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8/"/>
+      <url>2021/02/01/%E5%8D%8F%E7%A8%8B%E5%92%8Cchannel%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8/</url>
+      
+        <content type="html"><![CDATA[<h5 id="写代码实现两个-goroutine，其中一个产生随机数并写入到-go-channel-中，另外一个从-channel-中读取数字并打印到标准输出。最终输出五个随机数。"><a href="#写代码实现两个-goroutine，其中一个产生随机数并写入到-go-channel-中，另外一个从-channel-中读取数字并打印到标准输出。最终输出五个随机数。" class="headerlink" title="写代码实现两个 goroutine，其中一个产生随机数并写入到 go channel 中，另外一个从 channel 中读取数字并打印到标准输出。最终输出五个随机数。"></a>写代码实现两个 goroutine，其中一个产生随机数并写入到 go channel 中，另外一个从 channel 中读取数字并打印到标准输出。最终输出五个随机数。</h5><h5 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h5><p>这是一道很简单的golang基础题目，实现方法也有很多种，一般想答让面试官满意的答案还是有几点注意的地方。</p><ul><li>goroutine 在golang中式非阻塞的</li><li>channel 无缓冲情况下，读写都是阻塞的，且可以用for循环来读取数据，当管道关闭后，for 退出。</li><li>golang 中有专用的select case 语法从管道读取数据。</li></ul><pre class="line-numbers language-none"><code class="language-none">func randomNum() {out := make(chan int)wg := sync.WaitGroup{}wg.Add(2)go func() {defer wg.Done()for i := 0; i &lt; 5; i++ {out &lt;- rand.Intn(5)}// close(out)}()go func() {defer wg.Done()for i := 0; i &lt; 5; i++ {fmt.Println(&lt;-out)}}()wg.Wait()}h<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> interview </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>机器人坐标问题</title>
+      <link href="2021/01/29/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%9D%90%E6%A0%87%E9%97%AE%E9%A2%98/"/>
+      <url>2021/01/29/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%9D%90%E6%A0%87%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<h4 id="机器人坐标问题"><a href="#机器人坐标问题" class="headerlink" title="机器人坐标问题"></a>机器人坐标问题</h4><h5 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h5><p>有一个机器人，给一串指令，L左转 R右转，F前进一步，B后退一步，问最后机器人的坐标，最开始，机器人位于 0 0，方向为正Y。 可以输入重复指令n ： 比如 R2(LF) 这个等于指令 RLFLF。 问最后机器人的坐标是多少？</p><h5 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h5><p>这里的一个难点是解析重复指令。主要指令解析成功，计算坐标就简单了。</p><h5 id=""><a href="#" class="headerlink" title=""></a></h5><pre class="line-numbers language-none"><code class="language-none">package mainimport ("strconv""unicode")const (Left = iotaTopRightBottom)func main() {// println(move("R", 0, 0, Top))println(move("R2(LF)", 0, 0, Top))}// 有一个机器人，给一串指令，L左转 R右转，F前进一步，B后退一步，// 问最后机器人的坐标，最开始，机器人位于 0 0，方向为正Y。 可以输入重复指令n ： 比如 R2(LF) 这个等于指令 RLFLF。 问最后机器人的坐标是多少？// func move(cmd string, x0 int, y0 int, z0 int) (x, y, z int) {// x, y, z = x0, y0, z0// repeat := 0// repea// }func move(cmd string, x0 int, y0 int, z0 int) (int, int, int) {x, y, z := x0, y0, z0repeat := 0repeatCmd := ""for _, s := range cmd {switch {case unicode.IsNumber(s):sNum, err := strconv.Atoi(string(s))if err == nil {repeat += sNum}case s == ')':for i := 0; i &lt; repeat; i++ {x, y, z = move(repeatCmd, x, y, z)}repeat = 0repeatCmd = ""case (repeat &gt; 0 &amp;&amp; s != '(' &amp;&amp; s != ')'):repeatCmd += string(s)case s == 'R':z = (z + 1) % 4case s == 'L':z = (z + 4 - 1) % 4case s == 'F':if z == Top || z == Bottom {y = y - z + 2}if z == Left || z == Right {x = x + z - 1}}}return x, y, z}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> LeetCode </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> LeetCode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>字符串替换问题</title>
+      <link href="2021/01/29/%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9B%BF%E6%8D%A2%E9%97%AE%E9%A2%98/"/>
+      <url>2021/01/29/%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9B%BF%E6%8D%A2%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<h4 id="字符串替换问题"><a href="#字符串替换问题" class="headerlink" title="字符串替换问题"></a>字符串替换问题</h4><h5 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h5><p>请编写一个方法，将字符串中的空格全部替换为“%20”。 假定该字符串有足够的空间存放新增的字符，并且知道字符串的真实长度(小于等于1000)，同时保证字符串由【大小写的英文字母组成】。 给定一个string为原始的串，返回替换后的string。</p><h5 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h5><p>两个问题，第一个是只能是英文字母，第二个是替换空格。</p><h5 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h5><pre class="line-numbers language-none"><code class="language-none">func replaceBlank(s string) (string, bool) {len := len([]rune(s))if len &gt; 1000 {return s, false}for _, v := range s {if unicode.IsLetter(v) == false &amp;&amp; string(v) != " " {return s, false}}return strings.Replace(s, " ", "%20", -1), true}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> interview </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>判断两个给定的字符串排序后是否一致</title>
+      <link href="2021/01/29/%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E7%BB%99%E5%AE%9A%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8E%92%E5%BA%8F%E5%90%8E%E6%98%AF%E5%90%A6%E4%B8%80%E8%87%B4/"/>
+      <url>2021/01/29/%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E7%BB%99%E5%AE%9A%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8E%92%E5%BA%8F%E5%90%8E%E6%98%AF%E5%90%A6%E4%B8%80%E8%87%B4/</url>
+      
+        <content type="html"><![CDATA[<h4 id="判断两个给定的字符串排序后是否一致"><a href="#判断两个给定的字符串排序后是否一致" class="headerlink" title="判断两个给定的字符串排序后是否一致"></a>判断两个给定的字符串排序后是否一致</h4><h5 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h5><p>给定两个字符串，请编写程序，确定其中一个字符串的字符重新排列后，能否变成另一个字符串。 这里规定【大小写为不同字符】，且考虑字符串重点空格。给定一个string s1和一个string s2，请返回一个bool，代表两串是否重新排列后可相同。 保证两串的长度都小于等于5000。</p><h5 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h5><p>首先要保证字符串长度小于5000。之后只需要一次循环遍历s1中的字符在s2是否都存在即可</p><h4 id=""><a href="#" class="headerlink" title=""></a></h4><pre class="line-numbers language-none"><code class="language-none">func isRegroup(s1, s2 string) bool {len1 := len([]rune(s1))len2 := len([]rune(s2))if len1 != len2 {return false}if len1 &gt; 5000 || len2 &gt; 5000 {return false}for _, v := range s1 {if strings.Count(s1, string(v)) != strings.Count(s2, string(v)) {return false}}return true}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> interview </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>翻转字符串</title>
+      <link href="2021/01/29/%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
+      <url>2021/01/29/%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+      
+        <content type="html"><![CDATA[<h4 id="翻转字符串"><a href="#翻转字符串" class="headerlink" title="翻转字符串"></a>翻转字符串</h4><p>#####问题描述</p><p>请实现一个算法，在不使用【额外数据结构和储存空间】的情况下，翻转一个给定的字符串(可以使用单个过程变量)。</p><p>给定一个string，请返回一个string，为翻转后的字符串。保证字符串的长度小于等于5000。</p><h5 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h5><p>翻转字符串其实是将一个字符串以中间字符为轴，前后翻转，即将str[len]赋值给str[0],将str[0] 赋值 str[len]。</p><pre class="line-numbers language-none"><code class="language-none">func reverseString(s string) (string, bool) {str := []rune(s)l := len(str)if l &gt; 5000 {return s, false}for i := 0; i &lt; l/2; i++ {str[i], str[l-i-1] = str[l-i-1], str[i]}return string(str), true}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> interview </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>判断字符串中字符是否全都不同</title>
+      <link href="2021/01/29/%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%AD%97%E7%AC%A6%E6%98%AF%E5%90%A6%E5%85%A8%E9%83%BD%E4%B8%8D%E5%90%8C/"/>
+      <url>2021/01/29/%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%AD%97%E7%AC%A6%E6%98%AF%E5%90%A6%E5%85%A8%E9%83%BD%E4%B8%8D%E5%90%8C/</url>
+      
+        <content type="html"><![CDATA[<p>####判断字符串中字符是否全都不同<br>######问题描述</p><p>请实现一个算法，确定一个字符串的所有字符【是否全都不同】。这里我们要求【不允许使用额外的存储结构】。 给定一个string，请返回一个bool值,true代表所有字符全都不同，false代表存在相同的字符。 保证字符串中的字符为【ASCII字符】。字符串的长度小于等于【3000】。</p><p>#####解题思路</p><p>这里有几个重点，第一个是ASCII字符，ASCII字符字符一共有256个，其中128个是常用字符，可以在键盘上输入。128之后的是键盘上无法找到的。</p><p>然后是全部不同，也就是字符串中的字符没有重复的，再次，不准使用额外的储存结构，且字符串小于等于3000。</p><p>如果允许其他额外储存结构，这个题目很好做。如果不允许的话，可以使用golang内置的方式实现。</p><pre class="line-numbers language-none"><code class="language-none">func isUniqueStr(s string) bool {if strings.Count(s, "") &gt; 3000 {return false}for _, v := range s {if v &gt; 127 {return false}if strings.Count(s, string(v)) &gt; 1 {return false}}return true}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> interview </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>交替打印英文和字母</title>
+      <link href="2021/01/29/%E4%BA%A4%E6%9B%BF%E6%89%93%E5%8D%B0%E8%8B%B1%E6%96%87%E5%92%8C%E5%AD%97%E6%AF%8D/"/>
+      <url>2021/01/29/%E4%BA%A4%E6%9B%BF%E6%89%93%E5%8D%B0%E8%8B%B1%E6%96%87%E5%92%8C%E5%AD%97%E6%AF%8D/</url>
+      
+        <content type="html"><![CDATA[<h6 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h6><p>使用两个 goroutine 交替打印序列，一个 goroutine 打印数字， 另外一个 goroutine 打印字母， 最终效果如下：</p><p><code>12AB34CD56EF78GH910IJ1112KL1314MN1516OP1718QR1920ST2122UV2324WX2526YZ2728</code></p><h5 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h5><p>问题很简单，使用 channel 来控制打印的进度。使用两个 channel ，来分别控制数字和字母的打印序列， 数字打印完成后通过 channel 通知字母打印, 字母打印完成后通知数字打印，然后周而复始的工作。</p><h5 id=""><a href="#" class="headerlink" title=""></a></h5><pre class="line-numbers language-none"><code class="language-none">func strAndNum() {letter, number := make(chan bool), make(chan bool)wait := sync.WaitGroup{}go func() {i := 1for {select {case &lt;-number:fmt.Print(i)i++fmt.Print(i)i++letter &lt;- truebreakdefault:break}}}()wait.Add(1)go func(wait *sync.WaitGroup) {str := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"i := 0for {select {case &lt;-letter:if i &gt;= strings.Count(str, "")-1 {wait.Done()return}fmt.Print(str[i : i+1])i++if i &gt; strings.Count(str, "") {i = 0}fmt.Print(str[i : i+1])i++number &lt;- truebreakdefault:break}}}(&amp;wait)number &lt;- truewait.Wait()}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> interview </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> interview </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>LeetCode之回文数</title>
+      <link href="2021/01/28/LeetCode%E4%B9%8B%E5%9B%9E%E6%96%87%E6%95%B0/"/>
+      <url>2021/01/28/LeetCode%E4%B9%8B%E5%9B%9E%E6%96%87%E6%95%B0/</url>
+      
+        <content type="html"><![CDATA[<p>#####回文数</p><p>判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。</p><p>示例 1:</p><p>输入: 121<br>输出: true<br>示例 2:</p><p>输入: -121<br>输出: false<br>解释: 从左向右读, 为 -121 。 从右向左读, 为 121- 。因此它不是一个回文数。<br>示例 3:</p><p>输入: 10<br>输出: false<br>解释: 从右向左读, 为 01 。因此它不是一个回文数。<br>进阶:</p><p>你能不将整数转为字符串来解决这个问题吗？</p><h5 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h5><pre class="line-numbers language-none"><code class="language-none">func isPalindrome(x int) bool {if x &lt; 0 || (x%10 == 0 &amp;&amp; x != 0) {return false}revertedNumber := 0for x &gt; revertedNumber {revertedNumber = revertedNumber*10 + x%10x /= 10}return x == revertedNumber || x == revertedNumber/10}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> LeetCode </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> LeetCode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>LeetCode之证书反转</title>
+      <link href="2021/01/28/LeetCode%E4%B9%8B%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC/"/>
+      <url>2021/01/28/LeetCode%E4%B9%8B%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC/</url>
+      
+        <content type="html"><![CDATA[<h3 id="整数反转"><a href="#整数反转" class="headerlink" title="整数反转"></a>整数反转</h3><p>给你一个 32 位的有符号整数 x ，返回 x 中每位上的数字反转后的结果。</p><p>如果反转后整数超过 32 位的有符号整数的范围 [−231,  231 − 1] ，就返回 0。</p><p>假设环境不允许存储 64 位整数（有符号或无符号）。</p><p>示例 1：</p><p>输入：x = 123<br>输出：321<br>示例 2：</p><p>输入：x = -123<br>输出：-321<br>示例 3：</p><p>输入：x = 120<br>输出：21<br>示例 4：</p><p>输入：x = 0<br>输出：0</p><p>提示：</p><p>-231 &lt;= x &lt;= 231 - 1</p><h3 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h3><pre class="line-numbers language-none"><code class="language-none">func reverse(x int) {    var res int    for x != 0 {        if temp = int32(res); (temp*10)/10 != temp {            return 0        }        res = res * 10 + x % 10        x = x / 10    }    return res}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> LeetCode </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> LeetCode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>leetcode之两数之和</title>
+      <link href="2021/01/28/LeetCode%E4%B9%8B%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/"/>
+      <url>2021/01/28/LeetCode%E4%B9%8B%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/</url>
+      
+        <content type="html"><![CDATA[<h3 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a>两数之和</h3><p>给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 的那 两个 整数，并返回它们的数组下标。</p><p>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。</p><p>你可以按任意顺序返回答案。</p><h4 id="示例-1："><a href="#示例-1：" class="headerlink" title="示例 1："></a>示例 1：</h4><pre class="line-numbers language-none"><code class="language-none">输入：nums = [2,7,11,15], target = 9输出：[0,1]解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。示例 2：输入：nums = [3,2,4], target = 6输出：[1,2]示例 3：输入：nums = [3,3], target = 6输出：[0,1]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h4 id="提示："><a href="#提示：" class="headerlink" title="提示："></a>提示：</h4><pre><code>+ 2 &lt;= nums.length &lt;= 103+ -109 &lt;= nums[i] &lt;= 109+ -109 &lt;= target &lt;= 109+ 只会存在一个有效答案</code></pre><h4 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h4><ul><li>双重循环 <pre class="line-numbers language-none"><code class="language-none">func twoSum(nums []int, target int) []int {    for i := 0; i &lt; len(nums); i++ {        for j := i + 1; j &lt; len(nums); j++ {            if (nums[i] + nums[j]) == target {                return []int{i, j}            }        }    }    return []int{-1, -1}}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li><li>巧妙利用map <pre class="line-numbers language-none"><code class="language-none">func twoSum(nums []int, target int) []int {    result := []int{}    m := make(map[int]int)    for i, v := range nums {        if value, exist := m[target-v]; exist {            result = append(result, value)            result = append(result, i)            return result        }        m[v] = i    }    return result}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> LeetCode </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+            <tag> LeetCode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>将本地Docker镜像打包上传到DockerHub</title>
       <link href="2021/01/27/%E5%B0%86%E6%9C%AC%E5%9C%B0Docker%E9%95%9C%E5%83%8F%E6%89%93%E5%8C%85%E4%B8%8A%E4%BC%A0%E5%88%B0DockerHub/"/>
       <url>2021/01/27/%E5%B0%86%E6%9C%AC%E5%9C%B0Docker%E9%95%9C%E5%83%8F%E6%89%93%E5%8C%85%E4%B8%8A%E4%BC%A0%E5%88%B0DockerHub/</url>
@@ -40,7 +634,11 @@
       
       <categories>
           
-          <category> 搭建Gin框架 </category>
+          <category> Docker </category>
+          
+          <category> Gin </category>
+          
+          <category> golang </category>
           
       </categories>
       
